@@ -1,7 +1,6 @@
-FROM mhart/alpine-node:8
+FROM node:10-alpine
 
 RUN apk add --no-cache make gcc g++ python git bash
-RUN npm i -g truffle ganache-cli
 
 RUN \
   echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
@@ -15,3 +14,9 @@ RUN \
 
 ENV CHROME_BIN /usr/bin/chromium-browser
 ENV LIGHTHOUSE_CHROMIUM_PATH /usr/bin/chromium-browser
+
+
+USER node
+RUN mkdir ~/.npm-global
+ENV NPM_CONFIG_PREFIX=~/.npm-global
+RUN npm i -g truffle ganache-cli
